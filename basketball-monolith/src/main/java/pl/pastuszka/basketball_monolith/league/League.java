@@ -26,6 +26,7 @@ import pl.pastuszka.basketball_monolith.team.Team;
 public class League implements Comparable<League> {
 
     @Id
+    @Column(name = "league_id")
     private UUID id;
 
     @Column(name = "funding_year")

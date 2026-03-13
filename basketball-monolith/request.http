@@ -1,0 +1,22 @@
+### Dodaj nową ligę
+POST http://localhost:8080/leagues
+Content-Type: application/json
+
+{
+    "name": "NBA",
+    "country": "USA",
+    "fundingYear": 1946
+}
+
+### Pobierz wszystkie ligi
+GET http://localhost:8080/leagues
+
+### Edytuj ligę
+PUT http://localhost:8080/leagues/2e2667bf-4707-436c-9060-b32607e0eae4
+Content-Type: application/json
+
+{
+    "name": "National Basketball Association",
+    "country": "USA",
+    "fundingYear": 1946
+}
