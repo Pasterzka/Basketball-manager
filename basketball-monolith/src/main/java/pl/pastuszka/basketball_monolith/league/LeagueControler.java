@@ -12,12 +12,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,15 +37,15 @@ public class LeagueControler {
             l.getCountry(),
             l.getFundingYear()
         ))
-        .collect(Collectors.toList());
+        .collect(Collectors.toList()); // status 200 OK response with list of leagues in the body
     }
     
     // Returns a ResponseEntity containing the League if found, or a 404 Not Found response if not found
     @GetMapping("/{id}")
     public ResponseEntity<League> getLeague(@PathVariable UUID id) {
         return leagueService.findById(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+            .map(ResponseEntity::ok) // If league is found, return it with 200 OK response
+            .orElse(ResponseEntity.notFound().build()); // If league is not found, return 404 Not Found response
     }
 
     @PostMapping
@@ -56,7 +54,7 @@ public class LeagueControler {
             league.setId(UUID.randomUUID());
         }
         leagueService.save(league);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build(); // 201 Created response
     }
 
     @PutMapping("/{id}")
