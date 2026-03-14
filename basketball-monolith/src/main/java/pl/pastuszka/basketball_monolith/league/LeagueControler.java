@@ -65,7 +65,7 @@ public class LeagueControler {
                 l.setCountry(leagueUpdateDTO.country());
                 l.setFundingYear(leagueUpdateDTO.fundingYear());
                 leagueService.save(l);
-                return ResponseEntity.noContent().<Void>build(); // 204 No Content response
+                return ResponseEntity.ok().<Void>build(); // 200 OK response
             })
             .orElse(ResponseEntity.notFound().build()); // 404 Not Found response if league with given id does not exist
     }
@@ -75,7 +75,7 @@ public class LeagueControler {
         return leagueService.findById(id)
             .map(l -> {
                 leagueService.delete(id);
-                return ResponseEntity.noContent().<Void>build(); // 204 No Content response
+                return ResponseEntity.ok().<Void>build(); // 200 OK response
             })
             .orElse(ResponseEntity.notFound().build()); // 404 Not Found response if league with given id does not exist
     }

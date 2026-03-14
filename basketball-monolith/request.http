@@ -1,3 +1,8 @@
+@leagueId = bd641fa8-5c0c-4eb8-9a6b-6704266c1984
+@teamId = 46260ddd-05ab-4af4-b1ac-634f392baebe
+
+### League API
+
 ### Dodaj nową ligę
 POST http://localhost:8080/leagues
 Content-Type: application/json
@@ -12,11 +17,38 @@ Content-Type: application/json
 GET http://localhost:8080/leagues
 
 ### Edytuj ligę
-PUT http://localhost:8080/leagues/2e2667bf-4707-436c-9060-b32607e0eae4
+PUT http://localhost:8080/leagues/{{leagueId}}
 Content-Type: application/json
 
 {
     "name": "National Basketball Association",
     "country": "USA",
     "fundingYear": 1946
+}
+
+### Usuń ligę
+DELETE http://localhost:8080/leagues/{{leagueId}}
+
+
+### Team API
+
+### Add new team to league
+POST http://localhost:8080/leagues/{{leagueId}}/teams
+Content-Type: application/json
+
+{
+    "name": "Los Angeles Lakers",
+    "city": "Los Angeles"
+}
+
+### Get all teams in league
+GET http://localhost:8080/leagues/{{leagueId}}/teams
+
+### Edit team
+PUT http://localhost:8080/leagues/{{leagueId}}/teams/{{teamId}}
+Content-Type: application/json
+
+{
+    "name": "LA Lakers",
+    "city": "Los Angeles"
 }
