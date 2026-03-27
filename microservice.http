@@ -1,0 +1,57 @@
+### Zmienne globalne do ułatwienia testów (podmień na własne wygenerowane UUID jeśli chcesz)
+@gateway = http://localhost:8080
+@testLeagueId = cb67ca41-ffc2-41a3-8639-a201521ff0f1
+@testTeamId = 987e6543-e21b-43d3-b789-123456789000
+
+--- TESTY LIGI ---
+
+### 1. Dodaj nową ligę (używamy PUT, żeby wymusić nasze konkretne ID do testów)
+POST {{gateway}}/leagues
+Content-Type: application/json
+
+{
+    "id": "cb67ca41-ffc2-41a3-8639-a201521ff0f1",
+    "name": "NBA",
+    "country": "USA",
+    "fundingYear": 1946
+}
+
+### 2. Pobierz wszystkie ligi (żeby sprawdzić, czy działa)
+GET {{gateway}}/leagues
+
+
+--- TESTY DRUŻYN ---
+
+### 3. Próba dodania drużyny do NIEISTNIEJĄCEJ ligi (Powinno zwrócić 404 Not Found)
+POST {{gateway}}/leagues/00000000-0000-0000-0000-000000000000/teams
+Content-Type: application/json
+
+{
+    "name": "Los Angeles Lakers",
+    "city": "Los Angeles"
+}
+
+### 4. Dodanie drużyny do ISTNIEJĄCEJ ligi (Powinno zwrócić 201 Created)
+POST {{gateway}}/leagues/{{testLeagueId}}/teams
+Content-Type: application/json
+
+{
+    "id": "{{testTeamId}}",
+    "name": "Chicago Bulls",
+    "city": "Chicago",
+    "leagueId": "{{testLeagueId}}"
+}
+
+### 5. Pobierz wszystkie drużyny z naszej ligi
+GET {{gateway}}/leagues/{{testLeagueId}}/teams
+
+### 6. Aktualizacja drużyny
+PUT {{gateway}}/leagues/{{testLeagueId}}/teams/{{testTeamId}}
+Content-Type: application/json
+
+{
+    "id": "{{testTeamId}}",
+    "name": "Chicago Bulls U21",
+    "city": "Chicago",
+    "leagueId": "{{testLeagueId}}"
+}
