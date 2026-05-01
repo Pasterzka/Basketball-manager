@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Basketball } from '../../services/basketball';
 import { League } from '../../models/league';
 import { Router, RouterModule } from '@angular/router';
+import { Team } from '../../models/team';
 
 @Component({
   selector: 'app-league-edit',
@@ -15,6 +16,9 @@ import { Router, RouterModule } from '@angular/router';
 export class LeagueEdit implements OnInit{
   @Input() id!: string;
   league?: League;
+
+  teams: Team[] = [];
+  newTeam: Team = { name: '', city: '', leagueId: '' };
 
   constructor(private service: Basketball, private router: Router, private cdr: ChangeDetectorRef) {}
 
@@ -28,7 +32,19 @@ export class LeagueEdit implements OnInit{
         },
         error: (err) => console.error('Nie udało się pobrać ligi:', err)
       });
+
+      this.refreshTeams();
     }
+  }
+  refreshTeams() {
+    this.service.getTeamsByLeague(this.id).subscribe({
+      next: (data) => {
+        this.teams = data;
+        this.cdr.detectChanges();
+        console.log('Drużyny załadowane:', data);
+      },
+      error: (err) => console.error('Błąd pobierania drużyn:', err)
+    });
   }
 
   update() {
@@ -37,5 +53,25 @@ export class LeagueEdit implements OnInit{
         this.router.navigate(['/']);
       });
     }
+  }
+
+  saveTeam() {
+    this.service.addTeam(this.id, this.newTeam).subscribe({
+      next: () => {
+        this.newTeam = { name: '', city: '', leagueId: '' }; 
+        this.refreshTeams(); 
+      }
+    });
+  }
+
+  removeTeam(teamId: string) {
+    if (confirm('Usunąć tę drużynę?')) {
+    this.service.deleteTeam(this.id, teamId).subscribe({
+      next: () => {
+        this.refreshTeams();
+      },
+      error: (err) => console.error('Błąd usuwania:', err)
+    });
+  }
   }
 }
