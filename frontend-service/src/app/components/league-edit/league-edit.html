@@ -1,0 +1,52 @@
+<div *ngIf="league; else loading" class="container">
+    <div class="form-section">
+        <h2>Edytuj ligę: {{ league.name }}</h2>
+        <p>ID: {{ league.id }}</p>
+        <input [(ngModel)]="league.name" placeholder="Nazwa"><br>
+        <input [(ngModel)]="league.country" placeholder="Kraj"><br>
+        <input type="number" [(ngModel)]="league.fundingYear"><br>
+        
+        <button (click)="update()">Zapisz zmiany</button>
+        <button routerLink="/">Anuluj</button>
+    </div>
+    
+    <h3>Drużyny w tej lidze</h3>
+
+    <div class="team-container">
+        <h4>Dodaj nową drużynę</h4>
+        <input [(ngModel)]="newTeam.name" placeholder="Nazwa drużyny">
+        <input [(ngModel)]="newTeam.city" placeholder="Miasto">
+        <button (click)="saveTeam()">Dodaj do ligi</button>
+    
+        <table border="1" width="100%">
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Miasto</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (team of teams; track team.id) {
+                    <tr>
+                        <td>{{ team.name }}</td>
+                        <td>{{ team.city }}</td>
+                        <td>
+                            <button [routerLink]="['/league/edit', id, 'team-edit', team.id]">Edytuj drużynę</button>
+                            <button (click)="removeTeam(team.id!)">Usuń z ligi</button>
+                        </td>
+                    </tr>
+                }@empty {
+                    <tr><td colspan="3">Brak drużyn w tej lidze.</td></tr>
+                }
+            </tbody>
+        </table>
+
+        <button routerLink="/">Powrót do listy lig</button>
+    </div>
+</div>
+
+
+<ng-template #loading>
+  <p>Ładowanie danych...</p>
+</ng-template>
