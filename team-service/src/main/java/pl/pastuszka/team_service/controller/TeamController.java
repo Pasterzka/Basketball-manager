@@ -89,6 +89,8 @@ public class TeamController {
             team.setId(UUID.randomUUID());
         }
 
+        team.setLeagueId(leagueId);
+
         teamService.save(team);
         return ResponseEntity.status(HttpStatus.CREATED).build(); // 201 status created
     }

@@ -7,7 +7,7 @@ spring:
   cloud:
     gateway:
       server:
-        webflux: # <--- TO JEST KLUCZOWE W WERSJI 2025!
+        webflux:
           globalcors:
             cors-configurations:
               '[/**]':
