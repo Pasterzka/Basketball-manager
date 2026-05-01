@@ -1,0 +1,27 @@
+<div style="padding: 20px;">
+  <h3>Dodaj nową ligę</h3>
+  <input [(ngModel)]="newLeague.name" placeholder="Nazwa">
+  <input [(ngModel)]="newLeague.country" placeholder="Kraj">
+  <input type="number" [(ngModel)]="newLeague.fundingYear">
+  <button (click)="save()">Dodaj</button>
+
+  <hr>
+
+  <table border="1" width="100%">
+    <tr>
+      <th>Nazwa</th>
+      <th>Kraj</th>
+      <th>Akcje</th>
+    </tr>
+    @for (l of leagues; track l.id) {
+      <tr>
+        <td>{{ l.name }}</td>
+        <td>{{ l.country }}</td>
+        <td>
+          <button [routerLink]="['/edit', l.id]">Edytuj / Szczegóły</button>
+          <button (click)="remove(l.id!)">Usuń</button>
+        </td>
+      </tr>
+    }
+  </table>
+</div>

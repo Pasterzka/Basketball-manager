@@ -1,0 +1,10 @@
+<div *ngIf="league" style="padding: 20px;">
+    <h2>Edytuj ligę: {{ league.name }}</h2>
+    <p>ID: {{ league.id }}</p>
+    <input [(ngModel)]="league.name" placeholder="Nazwa"><br>
+    <input [(ngModel)]="league.country" placeholder="Kraj"><br>
+    <input type="number" [(ngModel)]="league.fundingYear"><br>
+      
+    <button (click)="update()">Zapisz zmiany</button>
+    <button routerLink="/">Anuluj</button>
+</div>
