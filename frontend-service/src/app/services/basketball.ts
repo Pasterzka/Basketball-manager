@@ -8,7 +8,7 @@ import { Team } from '../models/team';
   providedIn: 'root',
 })
 export class Basketball {
-  private apiUrl = 'http://localhost:8080/leagues';
+  private apiUrl = '/api/leagues';
 
   constructor(private http: HttpClient) {}
 
@@ -33,22 +33,22 @@ export class Basketball {
   }
 
   getTeam(leagueId: string, teamId: string): Observable<Team> {
-    return this.http.get<Team>(`http://localhost:8080/leagues/${leagueId}/teams/${teamId}`);
+    return this.http.get<Team>(`${this.apiUrl}/${leagueId}/teams/${teamId}`);
   }
 
   getTeamsByLeague(leagueId: string): Observable<Team[]> {
-    return this.http.get<Team[]>(`http://localhost:8080/leagues/${leagueId}/teams`);
+    return this.http.get<Team[]>(`${this.apiUrl}/${leagueId}/teams`);
   }
 
   addTeam(leagueId: string, team: Team): Observable<void> {
-  return this.http.post<void>(`http://localhost:8080/leagues/${leagueId}/teams`, team);
+  return this.http.post<void>(`${this.apiUrl}/${leagueId}/teams`, team);
   }
 
   updateTeam(leagueId: string, teamId: string, team: Team): Observable<void> {
-  return this.http.put<void>(`http://localhost:8080/leagues/${leagueId}/teams/${teamId}`, team);
+  return this.http.put<void>(`${this.apiUrl}/${leagueId}/teams/${teamId}`, team);
 }
 
   deleteTeam(leagueId: string, teamId: string): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8080/leagues/${leagueId}/teams/${teamId}`);
+    return this.http.delete<void>(`${this.apiUrl}/${leagueId}/teams/${teamId}`);
   }
 }
